@@ -2,10 +2,12 @@
 #include "board.h"
 #include "move.h"
 #include "comm.h"
+#include "minimax.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <ctype.h>
+#include <string.h>
 
 /**********************************************************/
 Position gamePosition;		// Position we are going to use
@@ -20,6 +22,8 @@ char msg;					// used to store the received message
 char * agentName = "MyAgent!";		//default name.. change it! keep in mind MAX_NAME_LENGTH
 
 char * ip = "127.0.0.1";	// default ip (local machine)
+
+char * agent = "random"; 	// agent algorithm	
 /**********************************************************/
 
 
@@ -28,12 +32,24 @@ int main( int argc, char ** argv )
 	int c;
 	opterr = 0;
 
-	while( ( c = getopt ( argc, argv, "i:p:h" ) ) != -1 )
+	while( ( c = getopt ( argc, argv, "i:p:hrma" ) ) != -1 )
 		switch( c )
 		{
 			case 'h':
-				printf( "[-i ip] [-p port]\n" );
+				printf( "[-i ip] [-p port] [-r random] [-m minimax] [-a alphabeta pruning (minimax)] \n" );
 				return 0;
+			case 'm': 
+				agent = "minimax";
+				agentName = "minimax!";
+				break;
+			case 'a':
+				agent = "alphabeta";
+				agentName = "alphabeta";
+				break;
+			case 'r': 
+				agent = "random";
+				agentName = "randomAg";
+				break;
 			case 'i':
 				ip = optarg;
 				break;
@@ -104,24 +120,31 @@ int main( int argc, char ** argv )
 
 
 /**********************************************************/
-// random player - not the most efficient implementation
-					while( 1 )
-					{
-						i = rand() % ARRAY_BOARD_SIZE;
-						j = rand() % ARRAY_BOARD_SIZE;
-
-						if( gamePosition.board[ i ][ j ] == EMPTY )
+					if (strcmp(agent, "random") == 0){
+						// random player - not the most efficient implementation
+						while( 1 )
 						{
-							myMove.tile[ 0 ] = i;
-							myMove.tile[ 1 ] = j;
-							if( isLegalMove( &gamePosition, &myMove ) )
-								break;
+							i = rand() % ARRAY_BOARD_SIZE;
+							j = rand() % ARRAY_BOARD_SIZE;
+
+							if( gamePosition.board[ i ][ j ] == EMPTY )
+							{
+								myMove.tile[ 0 ] = i;
+								myMove.tile[ 1 ] = j;
+								if( isLegalMove( &gamePosition, &myMove ) )
+									break;
+							}
 						}
-					}
+					
 
 // end of random
 /**********************************************************/
-
+					}else if (strcmp(agent, "minimax") == 0){
+						myMove = getBestMove(gamePosition, myColor, FALSE);
+						//if (myMove.tile[0] == -1 && myMove[1] == -1) myMove = NULL_MOVE;
+					}else if (strcmp(agent, "alphabeta") == 0){
+						myMove = getBestMove(gamePosition, myColor, TRUE);
+					}
 				}
 
 				sendMove( &myMove, mySocket );			//send our move

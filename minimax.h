@@ -3,7 +3,10 @@
 
 #include "board.h"
 
-void minimax_decision(Position * pos, int max_depth);
+
+#define MAX_DEPTH 4
+
+Move getBestMove(Position pos, int player, int alpheBeta);
 
 #endif
 

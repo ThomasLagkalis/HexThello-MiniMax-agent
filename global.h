@@ -25,7 +25,7 @@
 /**********************************************************/
 
 /* The size of our board */
-#define HEX_BOARD_RADIUS 7
+#define HEX_BOARD_RADIUS 8
 #define ARRAY_BOARD_SIZE (HEX_BOARD_RADIUS * 2 + 1)
 
 /* used to describe a null move (the only legal "move" when no move is available) */
