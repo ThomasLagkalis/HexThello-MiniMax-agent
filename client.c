@@ -19,7 +19,7 @@ char myColor;				// to store our color
 int mySocket;				// our socket
 char msg;					// used to store the received message
 
-char * agentName = "MyAgent!";		//default name.. change it! keep in mind MAX_NAME_LENGTH
+char * agentName = "ramdomAg";		//default name.. change it! keep in mind MAX_NAME_LENGTH
 
 char * ip = "127.0.0.1";	// default ip (local machine)
 
@@ -44,7 +44,7 @@ int main( int argc, char ** argv )
 				break;
 			case 'a':
 				agent = "alphabeta";
-				agentName = "alphabeta";
+				agentName = "alphabet";
 				break;
 			case 'r': 
 				agent = "random";
