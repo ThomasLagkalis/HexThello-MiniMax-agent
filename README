@@ -1,6 +1,7 @@
 TUC Hexthello v0.98b
 --------------------------------------------------
-Author: Ioannis Skoulakis
+Author of base code: Ioannis Skoulakis
+Author of agent extensions: Thomas Lagkalis
 Affiliation: Technical University of Crete, Greece
 --------------------------------------------------
 
@@ -18,7 +19,16 @@ Execution:
 
 ./guiServer
 ./server [-p port] [-g number_of_games] [-s (swap color after each game)]
+
+Defualt agent (minimax with alpha-beta pruning and all the heuristics):
 ./client [-i ip] [-p port]
+
+Only minimax agent (wihout alpha-beta pruning):
+./client -m [-i ip] [-p port]
+
+Random agent:
+./client -r [i ip] [-p port]
+
 
 --------------------------------------------------
 

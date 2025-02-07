@@ -19,11 +19,11 @@ char myColor;				// to store our color
 int mySocket;				// our socket
 char msg;					// used to store the received message
 
-char * agentName = "ramdomAg";		//default name.. change it! keep in mind MAX_NAME_LENGTH
+char * agentName = "SAMATA";		//default name.. change it! keep in mind MAX_NAME_LENGTH
 
 char * ip = "127.0.0.1";	// default ip (local machine)
 
-char * agent = "random"; 	// agent algorithm	
+char * agent = "alphabeta"; 	// agent algorithm	
 /**********************************************************/
 
 
