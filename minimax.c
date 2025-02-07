@@ -108,7 +108,7 @@ int evaluate(Position pos){
         }
     }
     // Assign weights to each heuristic.
-    val = 10 * pieces_diff + 5 * valid_moves + 4 * border_control - 3 * frontier_pieces;
+    val = 10 * pieces_diff + 5 * valid_moves + 6 * border_control - 4 * frontier_pieces;
 	return val;
 }
 
