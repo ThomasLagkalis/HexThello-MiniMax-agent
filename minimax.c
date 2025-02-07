@@ -108,8 +108,8 @@ int evaluate(Position pos){
         }
     }
     // Assign weights to each heuristic.
-    val = 10 * pieces_diff + 3 * valid_moves + 2 * border_control - 1 * frontier_pieces;
-    return val;
+    val = 10 * pieces_diff + 5 * valid_moves + 4 * border_control - 3 * frontier_pieces;
+	return val;
 }
 
 
@@ -162,10 +162,12 @@ int minimax(Position pos, int max_depth, int depth, int is_max, int alpha_beta, 
     }
 
     // Sort moves so that the best ones are expanded first.
-    if (is_max)
+    /*if (is_max){
         qsort(moves, moveCount, sizeof(MoveScore), cmpMax);
-    else
+	}else{
         qsort(moves, moveCount, sizeof(MoveScore), cmpMin);
+	}*/
+	
 
     // Now, iterate over the sorted moves.
     for (int m = 0; m < moveCount; m++) {
@@ -174,23 +176,28 @@ int minimax(Position pos, int max_depth, int depth, int is_max, int alpha_beta, 
         doMove(&new_pos, &cur_move);
 
         score = minimax(new_pos, max_depth, depth + 1, !is_max, alpha_beta, alpha, beta);
-
-        if (is_max) {
+		
+		if (is_max) {
             if (score > best)
                 best = score;
-            if (alpha_beta && best >= beta)
-                return best; // Beta cutoff.
-            if (best > alpha)
-                alpha = best;
+            if (alpha_beta) {
+                if (best > alpha)
+                    alpha = best;
+                if (best > beta)
+                    break; // Beta cutoff.
+            }
         } else {
             if (score < best)
                 best = score;
-            if (alpha_beta && best <= alpha)
-                return best; // Alpha cutoff.
-            if (best < beta)
-                beta = best;
+            if (alpha_beta) {
+                if (best < beta)
+                    beta = best;
+                if (best < alpha)
+                    break; // Alpha cutoff.
+            }
         }
     }
+
     return best;
 }
 
@@ -219,7 +226,6 @@ Move getBestMove(Position pos, int player, int alphaBeta) {
 
 
 	do{
-	printf("[DEBUG] d = %d, time = %f \n", d, ((double) clock() - start_time)/CLOCKS_PER_SEC);
     // Iterate over all legal moves (you could also apply move ordering here too)
     for (int i = 0; i < ARRAY_BOARD_SIZE; i++) {
         for (int j = 0; j < ARRAY_BOARD_SIZE; j++) {
