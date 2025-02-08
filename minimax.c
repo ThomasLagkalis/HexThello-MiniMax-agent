@@ -108,7 +108,7 @@ int evaluate(Position pos){
         }
     }
     // Assign weights to each heuristic.
-    val = 10 * pieces_diff + 3 * valid_moves + 3 * border_control - 1 * frontier_pieces;
+    val = 50 * pieces_diff + 3 * valid_moves + 15 * border_control - 1 * frontier_pieces;
 	return val;
 }
 
@@ -129,7 +129,7 @@ int minimax(Position pos, int max_depth, int depth, int is_max, int alpha_beta, 
 	 */
 
 	// Terminal condition: maximum depth or no legal moves for the current player.
-   if (depth == max_depth || !canMove(&pos, is_max)){
+   if (depth == max_depth || !canMove(&pos, !is_max)){
         return evaluate(pos);
    }
 
@@ -215,7 +215,7 @@ Move getBestMove(Position pos, int player, int alphaBeta) {
     bestMove.color = player;
 
     int best = (player == WHITE) ? -INF : INF;
-    int score, d=2;
+    int score, d=6, hasValidMove = 0;
 	double start_time = clock();
     Move cur_move;
     Position new_pos;
@@ -234,6 +234,7 @@ Move getBestMove(Position pos, int player, int alphaBeta) {
             cur_move.tile[1] = j;
             cur_move.color = player;
             if (pos.board[i][j] == EMPTY && isLegalMove(&pos, &cur_move)) {
+				hasValidMove = 1;
                 memcpy(&new_pos, &pos, sizeof(Position));
                 doMove(&new_pos, &cur_move); // Simulate move
 				
@@ -242,6 +243,8 @@ Move getBestMove(Position pos, int player, int alphaBeta) {
 				}else{
                     score = minimax(new_pos, d, 0, player == WHITE, FALSE, -INF, INF);
 				}
+
+				 printf("Move (%d, %d) -> Score: %d\n", i, j, score);
 
                 if ((player == WHITE && score > best) || (player == BLACK && score < best)) {
                     best = score;
@@ -254,6 +257,7 @@ Move getBestMove(Position pos, int player, int alphaBeta) {
 	printf("\nMax depth = %d", d);
 	d++;
 	}while(((double) clock() - start_time)/CLOCKS_PER_SEC < TIME_LIMIT);
+	if (!hasValidMove)  printf("ERROR: No valid moves found, but function should have found one!\n");
     return bestMove;
 }
 

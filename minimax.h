@@ -4,7 +4,7 @@
 #include "board.h"
 
 
-#define TIME_LIMIT 6
+#define TIME_LIMIT 5
 
 Move getBestMove(Position pos, int player, int alpheBeta);
 
