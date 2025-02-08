@@ -58,6 +58,7 @@ int isFrontier(Position pos, int x, int y) {
     return 0; // Not a frontier piece
 }
 
+
 int evaluate(Position pos){
 	/* 
 	 *	Evaluation function of current state (pos). 
@@ -76,6 +77,7 @@ int evaluate(Position pos){
     
 	int pieces_diff = 0, valid_moves = 0, border_control = 0, frontier_pieces = 0, val = 0;
     Move cur_move;
+	pieces_diff = pos.score[WHITE] - pos.score[BLACK];
     for (int i = 0; i < ARRAY_BOARD_SIZE; i++){
         // Check pieces controlling the border of the board.
         if (pos.board[0][i] == WHITE || pos.board[i][0] == WHITE ||
@@ -93,11 +95,9 @@ int evaluate(Position pos){
             // Compute the difference in pieces for each player.
             if (pos.board[i][j] == WHITE) {
                 frontier_pieces += isFrontier(pos, i, j);
-                pieces_diff++;
             }
             else if (pos.board[i][j] == BLACK){
                 frontier_pieces -= isFrontier(pos, i, j);
-                pieces_diff--;
             }
 
             // Check number of valid moves for each player.
@@ -108,7 +108,7 @@ int evaluate(Position pos){
         }
     }
     // Assign weights to each heuristic.
-    val = 10 * pieces_diff + 5 * valid_moves + 6 * border_control - 4 * frontier_pieces;
+    val = 10 * pieces_diff + 3 * valid_moves + 3 * border_control - 1 * frontier_pieces;
 	return val;
 }
 
@@ -129,8 +129,9 @@ int minimax(Position pos, int max_depth, int depth, int is_max, int alpha_beta, 
 	 */
 
 	// Terminal condition: maximum depth or no legal moves for the current player.
-    if (depth == max_depth || (!canMove(&pos, is_max) || !canMove(&pos, !is_max)))
+   if (depth == max_depth || !canMove(&pos, is_max)){
         return evaluate(pos);
+   }
 
     int best = is_max ? -INF : INF;
     int score;
@@ -162,11 +163,11 @@ int minimax(Position pos, int max_depth, int depth, int is_max, int alpha_beta, 
     }
 
     // Sort moves so that the best ones are expanded first.
-    /*if (is_max){
+    if (is_max){
         qsort(moves, moveCount, sizeof(MoveScore), cmpMax);
 	}else{
         qsort(moves, moveCount, sizeof(MoveScore), cmpMin);
-	}*/
+	}
 	
 
     // Now, iterate over the sorted moves.
@@ -183,7 +184,7 @@ int minimax(Position pos, int max_depth, int depth, int is_max, int alpha_beta, 
             if (alpha_beta) {
                 if (best > alpha)
                     alpha = best;
-                if (best > beta)
+                if (alpha >= beta)
                     break; // Beta cutoff.
             }
         } else {
@@ -192,7 +193,7 @@ int minimax(Position pos, int max_depth, int depth, int is_max, int alpha_beta, 
             if (alpha_beta) {
                 if (best < beta)
                     beta = best;
-                if (best < alpha)
+                if (alpha >= beta)
                     break; // Alpha cutoff.
             }
         }
@@ -250,6 +251,7 @@ Move getBestMove(Position pos, int player, int alphaBeta) {
             }
         }
     }
+	printf("\nMax depth = %d", d);
 	d++;
 	}while(((double) clock() - start_time)/CLOCKS_PER_SEC < TIME_LIMIT);
     return bestMove;

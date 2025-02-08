@@ -70,11 +70,11 @@ int main( int argc, char ** argv )
 
 	connectToTarget( port, ip, &mySocket );
 
-/**********************************************************/
+/**********************************************************
 // used in random
 	srand( time( NULL ) );
 	int i, j;
-/**********************************************************/
+**********************************************************/
 
 	while( 1 )
 	{
@@ -119,7 +119,7 @@ int main( int argc, char ** argv )
 				{
 
 
-/**********************************************************/
+/***********************************************************
 					if (strcmp(agent, "random") == 0){
 						// random player - not the most efficient implementation
 						while( 1 )
@@ -135,11 +135,12 @@ int main( int argc, char ** argv )
 									break;
 							}
 						}
+		
 					
 
 // end of random
-/**********************************************************/
-					}else if (strcmp(agent, "minimax") == 0){
+**********************************************************/
+					if (strcmp(agent, "minimax") == 0){
 						myMove = getBestMove(gamePosition, myColor, FALSE);
 						//if (myMove.tile[0] == -1 && myMove[1] == -1) myMove = NULL_MOVE;
 					}else if (strcmp(agent, "alphabeta") == 0){
