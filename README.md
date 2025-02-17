@@ -24,10 +24,22 @@ Run the necessary components using:
   ```bash
   ./guiServer
 
+- Or the default CLI server:
+```bash
+./server [-p port] [-g number_of_games] [-s (swap color after each game)]
+
+- Defualt agent (minimax with alpha-beta pruning and all the heuristics):
+```bash
+./client [-i ip] [-p port]
+
+- Only minimax agent (wihout alpha-beta pruning):
+./client -m [-i ip] [-p port]
+
+
 ## Agent Extensions
 
 - Minimax agent with alpha-beta pruning 
 - Heuristics on evaluation function 
 - Iterative Depening Search (IDS)
 
-For a more technical overview of the agent check the procect report.
+For a more technical overview of the agent check the procect [report](./report.pdf).
