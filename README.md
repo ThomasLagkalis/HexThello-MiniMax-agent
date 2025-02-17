@@ -1,4 +1,4 @@
-# UC Hexthello v0.98b
+# Hexthello MiniMax agent 
 
 ## Authors
 - **Base Code:** Ioannis Skoulakis  
