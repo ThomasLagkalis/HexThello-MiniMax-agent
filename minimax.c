@@ -109,7 +109,7 @@ int evaluate(Position pos){
     }
     // Assign weights to each heuristic.
     val = 50 * pieces_diff + 3 * valid_moves + 15 * border_control - 1 * frontier_pieces;
-	return val;
+	return (pos.score[WHITE] + pos.score[BLACK] > 140) ? 55 * pieces_diff : val; // If it's endgame prioritize the pieces difference over others heuristics.
 }
 
 
@@ -161,6 +161,8 @@ int minimax(Position pos, int max_depth, int depth, int is_max, int alpha_beta, 
             }
         }
     }
+
+	
 
     // Sort moves so that the best ones are expanded first.
     if (is_max){
