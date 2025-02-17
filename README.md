@@ -43,4 +43,4 @@ Run the necessary components using:
 - Heuristics on evaluation function 
 - Iterative Depening Search (IDS)
 
-For a more technical overview of the agent check the procect [report](https://github.com/ThomasLagkalis/HexThello-MiniMax-agent/blob/main/report.pdf).
+For a more technical overview of the agent check the project [report](https://github.com/ThomasLagkalis/HexThello-MiniMax-agent/blob/main/report.pdf).
