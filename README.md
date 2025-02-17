@@ -40,6 +40,7 @@ Run the necessary components using:
 ## Agent Extensions
 
 - Minimax agent with alpha-beta pruning 
+- Move ordering on minimax algorithm
 - Heuristics on evaluation function 
 - Iterative Depening Search (IDS)
 
