@@ -25,15 +25,16 @@ Run the necessary components using:
   ./guiServer
 
 - Or the default CLI server:
-```bash
-./server [-p port] [-g number_of_games] [-s (swap color after each game)]
+  ```bash
+  ./server [-p port] [-g number_of_games] [-s (swap color after each game)]
 
 - Defualt agent (minimax with alpha-beta pruning and all the heuristics):
-```bash
-./client [-i ip] [-p port]
+  ```bash
+  ./client [-i ip] [-p port]
 
 - Only minimax agent (wihout alpha-beta pruning):
-./client -m [-i ip] [-p port]
+  ```bash
+  ./client -m [-i ip] [-p port]
 
 
 ## Agent Extensions
@@ -42,4 +43,4 @@ Run the necessary components using:
 - Heuristics on evaluation function 
 - Iterative Depening Search (IDS)
 
-For a more technical overview of the agent check the procect [report](./report.pdf).
+For a more technical overview of the agent check the procect [report](https://github.com/ThomasLagkalis/HexThello-MiniMax-agent/blob/main/report.pdf).
